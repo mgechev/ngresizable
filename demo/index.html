@@ -55,25 +55,26 @@
 <body>
   <app></app>
   <!-- tshelpers -->
-  <script src="/vendor/index.js"></script>
-  <script src="/vendor/shim.min.js"></script>
-  <script src="/vendor/zone.min.js"></script>
-  <script src="/vendor/system.src.js"></script>
+  <script src="vendor/index.js"></script>
+  <script src="vendor/shim.min.js"></script>
+  <script src="vendor/zone.min.js"></script>
+  <script src="vendor/system.src.js"></script>
   <script>
     System.config({
+      base: 'ngresizable',
       defaultJSExtensions: true,
       paths: {
-        '@angular/common': '/vendor/common.umd.js',
-        '@angular/compiler': '/vendor/compiler.umd.js',
-        '@angular/core': '/vendor/core.umd.js',
-        '@angular/platform-browser': '/vendor/platform-browser.umd.js',
-        '@angular/platform-browser-dynamic': '/vendor/platform-browser-dynamic.umd.js',
-        'rxjs/*': '/vendor/Rx.js',
-        'ngresizable': '/dist/ngresizable.module.js',
-        '*': '/dist/*'
+        '@angular/common': 'vendor/common.umd.js',
+        '@angular/compiler': 'vendor/compiler.umd.js',
+        '@angular/core': 'vendor/core.umd.js',
+        '@angular/platform-browser': 'vendor/platform-browser.umd.js',
+        '@angular/platform-browser-dynamic': 'vendor/platform-browser-dynamic.umd.js',
+        'rxjs/*': 'vendor/Rx.js',
+        'ngresizable': 'dist/ngresizable.module.js',
+        '*': 'dist/*'
       }
     });
-    System.import('./dist/main.js');
+    System.import('dist/main.js');
   </script>
 </body>
 </html>
