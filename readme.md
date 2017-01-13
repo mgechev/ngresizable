@@ -36,7 +36,17 @@ $ npm i ngresizable --save
 
 # Integration
 
-Should work out of the box with webpack, respectively angular-cli.
+Should work out of the box with webpack, respectively angular-cli. All you need to do is to include `NgResizableModule`:
+
+```ts
+import { NgResizableModule } from 'ngresizable';
+
+@NgModule({
+  imports: [NgResizableModule],
+  ...
+})
+class AppModule {}
+```
 
 ## Angular Seed
 
