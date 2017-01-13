@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mgechev/ngresizable.svg?branch=master)](https://travis-ci.org/mgechev/ngresizable)
+
 # Angular Resizable
 
 Simple, tree-shakable, AoT, Universal and WebWorkers friendly resizable component for Angular (2 and beyond).
