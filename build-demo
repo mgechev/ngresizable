@@ -1,0 +1,25 @@
+declare -a bundles=("./node_modules/@angular/core/bundles/core.umd.js" 
+                    "./node_modules/@angular/compiler/bundles/compiler.umd.js"
+                    "./node_modules/@angular/common/bundles/common.umd.js"
+                    "./node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"
+                    "./node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js"
+                    "./node_modules/systemjs/dist/system.src.js"
+                    "./node_modules/zone.js/dist/zone.min.js"
+                    "./node_modules/core-js/client/shim.min.js"
+                    "./node_modules/rxjs/bundles/Rx.js"
+                    "./node_modules/ts-helpers/index.js"
+                    "./node_modules/tslib/tslib.js"
+                   )
+
+rm -rf demo/vendor
+mkdir demo/vendor
+
+for i in "${bundles[@]}"
+do
+   cp $i demo/vendor
+done
+
+npm run build
+npm run build.demo
+cp dist/* demo/dist/
+

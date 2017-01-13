@@ -1,0 +1,56 @@
+{
+  "name": "ngresizable",
+  "version": "0.0.1",
+  "description": "WebWorker and Universal friendly resizable component for Angular (2 and beyond)",
+  "main": "ngresizable.module.js",
+  "jsnext:main": "esm/ngresizable.module.js",
+  "scripts": {
+    "test": "mocha --require ts-node/register test/**/*.spec.ts --recursive",
+    "test:watch": "mocha -w --require ts-node/register test/**/*.spec.ts --recursive",
+    "build": "rimraf dist && ts-node tools/inline-styles.ts && tsc && tsc -p tsconfig-esm.json && cp package.json dist && ts-node tools/cleanup.ts && ngc && mv lib/ngresizable.component.ts.bak lib/ngresizable.component.ts",
+    "build.demo": "rimraf demo/dist && tsc -p tsconfig-demo.json",
+    "lint": "tslint -c tslint.json lib/**/*.ts test/**/*.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgechev/ngresizable.git"
+  },
+  "keywords": [
+    "resize",
+    "angular",
+    "resizable"
+  ],
+  "author": "Minko Gechev <mgechev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mgechev/ngresizable/issues"
+  },
+  "homepage": "https://github.com/mgechev/ngresizable#readme",
+  "peerDependencies": {
+    "@angular/core": ">=2.0.0"
+  },
+  "devDependencies": {
+    "@angular/common": "^2.4.2",
+    "@angular/compiler": "^2.4.2",
+    "@angular/compiler-cli": "^2.4.2",
+    "@angular/core": "^2.4.2",
+    "@angular/platform-browser": "^2.4.2",
+    "@angular/platform-browser-dynamic": "^2.4.2",
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.37",
+    "@types/node": "^7.0.0",
+    "chai": "^3.5.0",
+    "codelyzer": "^2.0.0-beta.4",
+    "core-js": "^2.4.1",
+    "mocha": "^3.2.0",
+    "rimraf": "^2.5.4",
+    "rxjs": "^5.0.3",
+    "systemjs": "0.19.28",
+    "ts-helpers": "^1.1.2",
+    "ts-node": "^2.0.0",
+    "tslib": "^1.5.0",
+    "tslint": "^4.3.1",
+    "typescript": "^2.1.4",
+    "zone.js": "^0.7.4"
+  }
+}
