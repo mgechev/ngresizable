@@ -1,7 +1,7 @@
 {
   "name": "ngresizable",
-  "version": "0.0.2",
-  "description": "Simple, tree-shakable, AoT, Universal and WebWorkers friendly resizable component for Angular (2 and beyond).",
+  "version": "0.0.3",
+  "description": "Simple, tree-shakable, AoT, Universal and Web Worker friendly resizable component for Angular (2 and beyond).",
   "main": "ngresizable.module.js",
   "jsnext:main": "esm/ngresizable.module.js",
   "types": "ngresizable.module.d.ts",
