@@ -1,9 +1,10 @@
 {
   "name": "ngresizable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple, tree-shakable, AoT, Universal and WebWorkers friendly resizable component for Angular (2 and beyond).",
   "main": "ngresizable.module.js",
   "jsnext:main": "esm/ngresizable.module.js",
+  "types": "ngresizable.module.d.ts",
   "scripts": {
     "test": "mocha --require ts-node/register test/**/*.spec.ts --recursive",
     "test:watch": "mocha -w --require ts-node/register test/**/*.spec.ts --recursive",
