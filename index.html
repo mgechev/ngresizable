@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+  .demo {
+    top: 30px;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: Verdana;
+    text-shadow: 0px 0px 2px #555;
+    border: 1px solid #ccc;
+    overflow: hidden;
+  }
+  .simple {
+    left: 30px;
+    background: #e7445d;
+  }
+  .grid {
+    left: 210px;
+    background: #0090E4;
+  }
+  .ratio {
+    left: 390px;
+    background: #99E343;
+  }
+  .directions {
+    left: 570px;
+    background: #FEC601;
+  }
+  .dots {
+    left: 750px;
+    background: #FFCC66;
+    overflow: visible;
+  }
+  .dots .ngr-grabber.ngr-bottom-left,
+  .dots .ngr-grabber.ngr-bottom-right,
+  .dots .ngr-grabber.ngr-top-left,
+  .dots .ngr-grabber.ngr-top-right {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 30px !important;
+    color: red;
+    background-color: red;
+  }
+  </style>
+</head>
+<body>
+  <app></app>
+  <!-- tshelpers -->
+  <script src="vendor/index.js"></script>
+  <script src="vendor/shim.min.js"></script>
+  <script src="vendor/zone.min.js"></script>
+  <script src="vendor/system.src.js"></script>
+  <script>
+    System.config({
+      base: 'ngresizable',
+      defaultJSExtensions: true,
+      paths: {
+        '@angular/common': 'vendor/common.umd.js',
+        '@angular/compiler': 'vendor/compiler.umd.js',
+        '@angular/core': 'vendor/core.umd.js',
+        '@angular/platform-browser': 'vendor/platform-browser.umd.js',
+        '@angular/platform-browser-dynamic': 'vendor/platform-browser-dynamic.umd.js',
+        'rxjs/*': 'vendor/Rx.js',
+        'ngresizable': 'dist/ngresizable.module.js',
+        '*': 'dist/*'
+      }
+    });
+    System.import('dist/main.js');
+  </script>
+</body>
+</html>
+
