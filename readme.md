@@ -4,6 +4,12 @@
 
 Simple, tree-shakable, AoT, Universal and WebWorkers friendly resizable component for Angular (2 and beyond).
 
+# How to use?
+
+```
+$ npm i ngresizable --save
+```
+
 # API
 
 ## Outputs
