@@ -57,7 +57,7 @@ class AppModule {}
 // Add packages (e.g. ngresizable)
 let additionalPackages: ExtendPackages[] = [{
   name: 'ngresizable',
-  path: 'node_modules/ngresizable/index.js'
+  path: 'node_modules/ngresizable/ngresizable.bundle.js'
 }];
 
 this.addPackagesBundles(additionalPackages);
@@ -67,3 +67,4 @@ this.addPackagesBundles(additionalPackages);
 # License
 
 MIT
+
