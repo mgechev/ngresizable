@@ -26,7 +26,6 @@ import { MOUSE_DOWN, RESIZE_STOP, RESIZE } from './ngresizable.actions';
   // tslint:disable-next-line
   selector: '[ngResizable]',
   providers: [Store],
-  moduleId: module.id,
   template: `
     <ng-content></ng-content>
     <div *ngFor="let dir of directions"
