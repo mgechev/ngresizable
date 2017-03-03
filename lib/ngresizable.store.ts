@@ -10,8 +10,10 @@ export interface ISize {
 
 export interface IRectangle {
   x: number;
+  xMax: number;
   y: number;
   width: number;
+  widthMin: number;
   height: number;
 }
 
@@ -47,8 +49,10 @@ export const defaultGrid: ISize = {
 
 export const defaultBound: IRectangle = {
   x: -Infinity,
+  xMax: Infinity,
   y: -Infinity,
   width: Infinity,
+  widthMin: -Infinity,
   height: Infinity
 };
 
