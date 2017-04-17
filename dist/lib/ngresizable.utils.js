@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.resizeRight = function (nextWidth, options, currentElementPosition) {
+export var resizeRight = function (nextWidth, options, currentElementPosition) {
     if (nextWidth <= options.minSize.width)
         nextWidth = options.minSize.width;
     if (nextWidth >= options.maxSize.width)
@@ -9,7 +7,7 @@ exports.resizeRight = function (nextWidth, options, currentElementPosition) {
         nextWidth -= (nextWidth + currentElementPosition.x) - (options.bound.x + options.bound.width);
     return { nextWidth: nextWidth, nextLeft: currentElementPosition.x };
 };
-exports.resizeBottom = function (nextHeight, options, currentElementPosition) {
+export var resizeBottom = function (nextHeight, options, currentElementPosition) {
     if (nextHeight <= options.minSize.height)
         nextHeight = options.minSize.height;
     if (nextHeight >= options.maxSize.height)
@@ -18,7 +16,7 @@ exports.resizeBottom = function (nextHeight, options, currentElementPosition) {
         nextHeight -= (nextHeight + currentElementPosition.y) - (options.bound.y + options.bound.height);
     return { nextHeight: nextHeight, nextTop: currentElementPosition.y };
 };
-exports.resizeTop = function (nextHeight, currentPos, currentSize, options) {
+export var resizeTop = function (nextHeight, currentPos, currentSize, options) {
     var nextTop = currentPos.y + (currentSize.height - nextHeight);
     // Lower priorty compared to all others
     if (nextHeight <= options.minSize.height) {
@@ -35,7 +33,7 @@ exports.resizeTop = function (nextHeight, currentPos, currentSize, options) {
     }
     return { nextHeight: nextHeight, nextTop: nextTop };
 };
-exports.resizeLeft = function (nextWidth, currentPos, currentSize, options) {
+export var resizeLeft = function (nextWidth, currentPos, currentSize, options) {
     var nextLeft = currentPos.x + (currentSize.width - nextWidth);
     // Lower priorty compared to all others
     if (nextWidth <= options.minSize.width) {
@@ -52,7 +50,7 @@ exports.resizeLeft = function (nextWidth, currentPos, currentSize, options) {
     }
     return { nextWidth: nextWidth, nextLeft: nextLeft };
 };
-exports.manageRatio = function (_a, options, currentPos, currentSize, direction, currentElementPosition) {
+export var manageRatio = function (_a, options, currentPos, currentSize, direction, currentElementPosition) {
     var nextWidth = _a.nextWidth, nextHeight = _a.nextHeight, nextTop = _a.nextTop, nextLeft = _a.nextLeft;
     var data;
     var bound = options.bound;
@@ -62,26 +60,26 @@ exports.manageRatio = function (_a, options, currentPos, currentSize, direction,
     bound.height = parseInt(bound.height.toFixed());
     switch (direction) {
         case 'left':
-            nextHeight = exports.resizeBottom(options.ratio * nextWidth, options, currentElementPosition).nextHeight;
+            nextHeight = resizeBottom(options.ratio * nextWidth, options, currentElementPosition).nextHeight;
             nextLeft += nextWidth - (nextHeight / options.ratio);
             nextWidth = nextHeight / options.ratio;
             break;
         case 'right':
-            nextHeight = exports.resizeBottom(options.ratio * nextWidth, options, currentElementPosition).nextHeight;
+            nextHeight = resizeBottom(options.ratio * nextWidth, options, currentElementPosition).nextHeight;
             nextWidth = nextHeight / options.ratio;
             break;
         case 'top':
-            nextWidth = exports.resizeRight(nextHeight / options.ratio, options, currentElementPosition).nextWidth;
+            nextWidth = resizeRight(nextHeight / options.ratio, options, currentElementPosition).nextWidth;
             nextTop += nextHeight - (nextWidth * options.ratio);
             nextHeight = options.ratio * nextWidth;
             break;
         case 'bottom':
         case 'bottom-right':
-            nextWidth = exports.resizeRight(nextHeight / options.ratio, options, currentElementPosition).nextWidth;
+            nextWidth = resizeRight(nextHeight / options.ratio, options, currentElementPosition).nextWidth;
             nextHeight = options.ratio * nextWidth;
             break;
         case 'top-left':
-            data = exports.resizeLeft(nextHeight / options.ratio, currentPos, currentSize, options);
+            data = resizeLeft(nextHeight / options.ratio, currentPos, currentSize, options);
             nextWidth = data.nextWidth;
             nextLeft = data.nextLeft;
             if (nextWidth < nextHeight / options.ratio) {
@@ -90,7 +88,7 @@ exports.manageRatio = function (_a, options, currentPos, currentSize, direction,
             }
             break;
         case 'bottom-left':
-            data = exports.resizeLeft(nextHeight / options.ratio, currentPos, currentSize, options);
+            data = resizeLeft(nextHeight / options.ratio, currentPos, currentSize, options);
             nextWidth = data.nextWidth;
             nextLeft = data.nextLeft;
             if (nextWidth < nextHeight / options.ratio) {
@@ -98,7 +96,7 @@ exports.manageRatio = function (_a, options, currentPos, currentSize, direction,
             }
             break;
         case 'top-right':
-            data = exports.resizeRight(nextHeight / options.ratio, options, currentElementPosition);
+            data = resizeRight(nextHeight / options.ratio, options, currentElementPosition);
             nextWidth = data.nextWidth;
             if (nextWidth < nextHeight / options.ratio) {
                 nextTop += nextHeight - (nextWidth * options.ratio);

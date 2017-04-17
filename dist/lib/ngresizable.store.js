@@ -1,11 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 ;
-exports.defaultGrid = {
+export var defaultGrid = {
     width: 1,
     height: 1
 };
-exports.defaultBound = {
+export var defaultBound = {
     x: -Infinity,
     y: -Infinity,
     width: Infinity,
@@ -37,5 +35,5 @@ var Store = (function () {
     };
     return Store;
 }());
-exports.Store = Store;
+export { Store };
 //# sourceMappingURL=ngresizable.store.js.map

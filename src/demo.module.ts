@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { DemoComponent } from './demo.component';
 
-const NgResizableModule = require('ngresizable').NgResizableModule;
+import { NgResizableModule } from '../../lib/ngresizable.module';
 
 @NgModule({
   imports: [NgResizableModule, BrowserModule],

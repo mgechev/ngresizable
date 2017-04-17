@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var ngresizable_actions_1 = require("./ngresizable.actions");
-var ngresizable_utils_1 = require("./ngresizable.utils");
+import { RESIZE, RESIZE_STOP, MOUSE_DOWN } from './ngresizable.actions';
+import { manageRatio, resizeTop, resizeLeft, resizeBottom, resizeRight } from './ngresizable.utils';
 // DANGER
 // Mutates the state instead of creating
 // a new one. This is not a traditional
@@ -10,7 +8,7 @@ var ngresizable_utils_1 = require("./ngresizable.utils");
 // This separation aims better testability,
 // separation of concerns, less dependencies
 // and higher performance.
-exports.resizeReducer = function (currentState, action, mousePosition, startPosition, options, initialSize, initialResizeDir) {
+export var resizeReducer = function (currentState, action, mousePosition, startPosition, options, initialSize, initialResizeDir) {
     if (options.disabled) {
         return currentState;
     }
@@ -19,7 +17,7 @@ exports.resizeReducer = function (currentState, action, mousePosition, startPosi
     var currentSize = currentState.currentSize;
     var currentPos = currentState.currentPosition;
     switch (action) {
-        case ngresizable_actions_1.MOUSE_DOWN:
+        case MOUSE_DOWN:
             if (!initialResizeDir) {
                 throw new Error('Direction not provided');
             }
@@ -34,7 +32,7 @@ exports.resizeReducer = function (currentState, action, mousePosition, startPosi
             startSize.width = initialSize.width;
             startSize.height = initialSize.height;
             break;
-        case ngresizable_actions_1.RESIZE:
+        case RESIZE:
             if (!currentState.isResizing) {
                 return currentState;
             }
@@ -43,23 +41,23 @@ exports.resizeReducer = function (currentState, action, mousePosition, startPosi
             var nextLeft = currentPos.x;
             var nextTop = currentPos.y;
             if (/right/.test(currentState.direction)) {
-                nextWidth = ngresizable_utils_1.resizeRight(mousePosition.x - startPos.x + startSize.width, options, currentState.currentPosition).nextWidth;
+                nextWidth = resizeRight(mousePosition.x - startPos.x + startSize.width, options, currentState.currentPosition).nextWidth;
             }
             if (/bottom/.test(currentState.direction)) {
-                nextHeight = ngresizable_utils_1.resizeBottom(mousePosition.y - startPos.y + startSize.height, options, currentState.currentPosition).nextHeight;
+                nextHeight = resizeBottom(mousePosition.y - startPos.y + startSize.height, options, currentState.currentPosition).nextHeight;
             }
             if (/top/.test(currentState.direction)) {
-                var data = ngresizable_utils_1.resizeTop(startPos.y - mousePosition.y + startSize.height, currentPos, currentSize, options);
+                var data = resizeTop(startPos.y - mousePosition.y + startSize.height, currentPos, currentSize, options);
                 nextTop = data.nextTop;
                 nextHeight = data.nextHeight;
             }
             if (/left/.test(currentState.direction)) {
-                var data = ngresizable_utils_1.resizeLeft(startPos.x - mousePosition.x + startSize.width, currentPos, currentSize, options);
+                var data = resizeLeft(startPos.x - mousePosition.x + startSize.width, currentPos, currentSize, options);
                 nextLeft = data.nextLeft;
                 nextWidth = data.nextWidth;
             }
             if (options.ratio) {
-                var fixedSize = ngresizable_utils_1.manageRatio({ nextTop: nextTop, nextWidth: nextWidth, nextHeight: nextHeight, nextLeft: nextLeft }, options, currentPos, currentSize, currentState.direction, currentState.currentPosition);
+                var fixedSize = manageRatio({ nextTop: nextTop, nextWidth: nextWidth, nextHeight: nextHeight, nextLeft: nextLeft }, options, currentPos, currentSize, currentState.direction, currentState.currentPosition);
                 nextLeft = fixedSize.nextLeft;
                 nextTop = fixedSize.nextTop;
                 nextWidth = fixedSize.nextWidth;
@@ -70,7 +68,7 @@ exports.resizeReducer = function (currentState, action, mousePosition, startPosi
             currentSize.width = Math.round(nextWidth / options.grid.width) * options.grid.width;
             currentSize.height = Math.round(nextHeight / options.grid.height) * options.grid.height;
             break;
-        case ngresizable_actions_1.RESIZE_STOP:
+        case RESIZE_STOP:
             currentState.isResizing = false;
             startSize.width = currentSize.width;
             startSize.height = currentSize.height;

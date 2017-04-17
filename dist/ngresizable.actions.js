@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.RESIZE = 'resize-resize';
 exports.MOUSE_DOWN = 'resize-mouse-down';
 exports.RESIZE_STOP = 'resize-stop';
