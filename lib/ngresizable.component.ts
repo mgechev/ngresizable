@@ -1,7 +1,7 @@
 import {
   Component,
   ElementRef,
-  Renderer,
+  Renderer2,
   Input,
   Output,
   EventEmitter,
@@ -79,10 +79,10 @@ export class NgResizableComponent implements OnInit, OnChanges {
   // Resize ratio.
   @Input() ratio: number = null;
 
-  constructor(private _el: ElementRef, private _store: Store, private _renderer: Renderer) {}
+  constructor(private _el: ElementRef, private _store: Store, private _renderer: Renderer2) {}
 
   ngOnInit() {
-    this._renderer.setElementClass(this._el.nativeElement, 'ngresizable', true);
+    this._renderer.addClass(this._el.nativeElement, 'ngresizable');
     this._store.addReducer(resizeReducer);
     this.setSize(
       { width: this.width, height: this.height },
@@ -166,9 +166,9 @@ export class NgResizableComponent implements OnInit, OnChanges {
     this.height = size.height;
     this.x = pos.x;
     this.y = pos.y;
-    this._renderer.setElementStyle(this._el.nativeElement, 'width', this.width + 'px');
-    this._renderer.setElementStyle(this._el.nativeElement, 'height', this.height + 'px');
-    this._renderer.setElementStyle(this._el.nativeElement, 'left', this.x + 'px');
-    this._renderer.setElementStyle(this._el.nativeElement, 'top', this.y + 'px');
+    this._renderer.setStyle(this._el.nativeElement, 'width', this.width + 'px');
+    this._renderer.setStyle(this._el.nativeElement, 'height', this.height + 'px');
+    this._renderer.setStyle(this._el.nativeElement, 'left', this.x + 'px');
+    this._renderer.setStyle(this._el.nativeElement, 'top', this.y + 'px');
   }
 }

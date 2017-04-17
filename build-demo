@@ -1,4 +1,4 @@
-declare -a bundles=("./node_modules/@angular/core/bundles/core.umd.js" 
+declare -a bundles=("./node_modules/@angular/core/bundles/core.umd.js"
                     "./node_modules/@angular/compiler/bundles/compiler.umd.js"
                     "./node_modules/@angular/common/bundles/common.umd.js"
                     "./node_modules/@angular/platform-browser/bundles/platform-browser.umd.js"
@@ -19,7 +19,9 @@ do
    cp $i demo/vendor
 done
 
-npm run build
-npm run build.demo
+rm -rf dist && ./node_modules/.bin/ts-node tools/inline-styles.ts && ./node_modules/.bin/tsc -p tsconfig-esm.json && ./node_modules/.bin/rollup -c rollup.config.js dist/ngresizable.module.js > dist/ngresizable.bundle.js && cp package.json dist && ./node_modules/.bin/ts-node tools/cleanup.ts && ./node_modules/.bin/ngc && cp README.md dist
+npm run build:demo
 cp dist/* demo/dist/
-
+./node_modules/.bin/rollup -c rollup.demo-config.js demo/dist/demo/src/main.js > demo/main.bundle.js
+uglifyjs demo/main.bundle.js --screw-ie8 --compress --mangle --output demo/main.bundle.min.js
+npm run postbuild
