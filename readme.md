@@ -2,7 +2,9 @@
 
 # Angular Resizable
 
-Simple, tree-shakable, AoT, Universal and Web Worker friendly resizable component for Angular (2 and beyond).
+Simple, tree-shakable, AoT, Universal and Web Worker friendly resizable component for Angular (4 and beyond).
+
+For version compatible with Angular 2 install `0.1.2`.
 
 # How to use?
 
