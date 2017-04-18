@@ -539,8 +539,10 @@ describe('ngresizable', () => {
     it('should respect set boundaries', () => {
       defaultOptions.bound = {
         width: 10,
+        widthMin: 4,
         height: 15,
         x: 1,
+        xMax: 3,
         y: 1
       };
       resizeReducer(
@@ -563,7 +565,7 @@ describe('ngresizable', () => {
 
       state = resizeReducer(defaultState,
         actions.RESIZE,
-        { x: 4, y: 5 },
+        { x: 3, y: 5 },
         { x: 1, y: 1 },
         defaultOptions
       );

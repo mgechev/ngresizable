@@ -7,6 +7,8 @@ export const resizeRight = (nextWidth: number, options: IOptions, currentElement
     nextWidth = options.maxSize.width;
   if (nextWidth + currentElementPosition.x >= options.bound.x + options.bound.width)
     nextWidth -= (nextWidth + currentElementPosition.x) - (options.bound.x + options.bound.width);
+  if (nextWidth + currentElementPosition.x < options.bound.x + options.bound.widthMin)
+      nextWidth -= (nextWidth + currentElementPosition.x) - (options.bound.x + options.bound.widthMin);
   return { nextWidth, nextLeft: currentElementPosition.x };
 };
 
@@ -52,6 +54,10 @@ export const resizeLeft = (nextWidth: number, currentPos: IPoint, currentSize: I
   if (nextLeft <= options.bound.x) {
     nextWidth -= (options.bound.x - nextLeft);
     nextLeft = options.bound.x;
+  }
+  if (nextLeft > options.bound.xMax) {
+      nextWidth -= (options.bound.xMax - nextLeft);
+      nextLeft = options.bound.xMax;
   }
   return { nextWidth, nextLeft };
 };
