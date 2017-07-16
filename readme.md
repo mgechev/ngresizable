@@ -6,6 +6,11 @@ Simple, tree-shakable, AoT, Universal and Web Worker friendly resizable componen
 
 For version compatible with Angular 2 install `0.1.2`.
 
+Supports the following values of the `position` CSS property:
+
+- `absolute`.
+- `relative`.
+
 # How to use?
 
 ```
