@@ -98,7 +98,6 @@ export class NgResizableComponent implements OnInit, OnChanges {
   }
 
   onMouseMove(e: any) {
-    e.preventDefault();
     if (e.touches) {
       e = e.touches[0];
     }
