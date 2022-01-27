@@ -1,4 +1,4 @@
-import { IResizeState, ISize, IPoint, IOptions } from './ngresizable.store';
+import { ISize, IPoint, IOptions } from './ngresizable.store';
 
 export const resizeRight = (nextWidth: number, options: IOptions, currentElementPosition: IPoint) => {
   if (nextWidth <= options.minSize.width)

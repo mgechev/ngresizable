@@ -1,77 +1,13 @@
-[![Build Status](https://travis-ci.org/mgechev/ngresizable.svg?branch=master)](https://travis-ci.org/mgechev/ngresizable)
+# Ngresizable
 
-# Angular Resizable
+This workspace contains an upgraded version of the "ngresizable" library, and also a demo application to run it.
 
-Simple, tree-shakable, AoT, Universal and Web Worker friendly resizable component for Angular (4 and beyond).
+For more details, see project/ngresizable/README.md
 
-For version compatible with Angular 2 install `0.1.2`.
+This workspace was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.7.
 
-Supports the following values of the `position` CSS property:
+The source code was copied from Ngresizable on GitHub and upgraded as necessary to make it compatible with to Angular 12.
 
-- `absolute`.
-- `relative`.
+# To install in another application:
 
-# How to use?
-
-```
-$ npm i ngresizable --save
-```
-
-# API
-
-## Outputs
-
-  - `resizeStart: EventEmitter<IResizeEvent>` - Resize start event.
-  - `resizing: EventEmitter<IResizeEvent>` - Resizing event.
-  - `resizeEnd: EventEmitter<IResizeEvent>` - Resize end event.
-
-## Inputs
-
-  - `width` - Width of the element number.
-  - `height: number` - Height of the element.
-  - `x: number` - x coordinate of the element.
-  - `y: number` - y coordinate of the element.
-  - `maxWidth: number` - Maximum width. Default `Infinity`.
-  - `minWidth: number` - Minimum width. Default `0`.
-  - `maxHeight: number` - Maximum height. Default `Infinity`.
-  - `minHeight: number` - Minimum height. Default `0`.
-  - `disableResize: boolean = false` - Disable the resize.
-  - `directions: string[]` - An array which contains the resize directions. Default `['bottom', 'right']`.
-  - `grid: ISize` - Resize in a grid. Default `{ width: 1, height: 1 }`.
-  - `bound: IRectangle` - Bound the resize.
-  - `ratio: number` - Resize ratio.
-
-# Integration
-
-Should work out of the box with webpack, respectively angular-cli. All you need to do is to include `NgResizableModule`:
-
-```ts
-import { NgResizableModule } from 'ngresizable';
-
-@NgModule({
-  imports: [NgResizableModule],
-  ...
-})
-class AppModule {}
-```
-
-## Angular Seed
-
-```ts
-// tools/config/project.ts
-
-...
-// Add packages (e.g. ngresizable)
-let additionalPackages: ExtendPackages[] = [{
-  name: 'ngresizable',
-  path: 'node_modules/ngresizable/ngresizable.bundle.js'
-}];
-
-this.addPackagesBundles(additionalPackages);
-...
-```
-
-# License
-
-MIT
-
+see instructions in projects/ngresizable/README.md

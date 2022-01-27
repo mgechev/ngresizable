@@ -2,12 +2,20 @@ export interface IPoint {
   x: number;
   y: number;
 }
+export interface IUndefinedPoint {
+  x: number|undefined;
+  y: number|undefined;
+}
 
 export interface ISize {
   width: number;
   height: number;
 }
 
+export interface IUndefinedSize {
+  width: number|undefined;
+  height: number|undefined;
+}
 export interface IRectangle {
   x: number;
   y: number;
@@ -38,7 +46,7 @@ export interface IOptions {
   disabled: boolean;
   bound: IRectangle;
   ratio: number;
-};
+}
 
 export const defaultGrid: ISize = {
   width: 1,
@@ -59,7 +67,7 @@ export class Store {
     currentPosition: { x: 0, y: 0 },
     startPosition: { x: 0, y: 0 },
     isResizing: false,
-    direction: null
+    direction: ''
   };
 
   private reducers: any[] = [];
@@ -70,6 +78,7 @@ export class Store {
 
   emitAction(action: any, ...params: any[]) {
     this.state = this.reducers.reduce((p: IResizeState, c: any) => {
+      // eslint-disable-next-line prefer-spread
       return c.apply(null, [p, action].concat(params));
     }, this.state);
   }

@@ -30,6 +30,9 @@ export const resizeReducer = (
     if (!initialResizeDir) {
       throw new Error('Direction not provided');
     }
+    if (!initialSize) {
+      throw new Error('Initial size not provided');
+    }
     currentState.direction = initialResizeDir;
     currentState.isResizing = true;
     startPos.x = mousePosition.x;
@@ -45,10 +48,11 @@ export const resizeReducer = (
     if (!currentState.isResizing) {
       return currentState;
     }
-    let nextWidth = currentSize.width;
-    let nextHeight = currentSize.height;
-    let nextLeft = currentPos.x;
-    let nextTop = currentPos.y;
+    
+    let nextWidth = currentSize.width; // eslint-disable-line no-case-declarations
+    let nextHeight = currentSize.height; // eslint-disable-line no-case-declarations
+    let nextLeft = currentPos.x; // eslint-disable-line no-case-declarations
+    let nextTop = currentPos.y; // eslint-disable-line no-case-declarations
 
     if (/right/.test(currentState.direction)) {
       nextWidth = resizeRight(mousePosition.x - startPos.x + startSize.width, options, currentState.currentPosition).nextWidth;
