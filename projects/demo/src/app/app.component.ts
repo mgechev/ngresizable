@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app',
-  template: `
+  selector: 'app-root',
+   template: `
     <div class="demo simple" ngResizable [minWidth]="20" [minHeight]="20">
       Simple demo
     </div> 
@@ -20,5 +20,5 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class DemoComponent {}
+export class AppComponent {}
 

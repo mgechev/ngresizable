@@ -6,7 +6,8 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  OnChanges
+  OnChanges,
+  HostListener
 } from '@angular/core';
 
 import {
@@ -17,13 +18,14 @@ import {
   IResizeState,
   IResizeEvent,
   IRectangle,
-  defaultBound
+  defaultBound,
+  IUndefinedSize,
+  IUndefinedPoint
 } from './ngresizable.store';
 import { resizeReducer } from './ngresizable.reducer';
 import { MOUSE_DOWN, RESIZE_STOP, RESIZE } from './ngresizable.actions';
 
 @Component({
-  // tslint:disable-next-line
   selector: '[ngResizable]',
   providers: [Store],
   template: `
@@ -35,13 +37,6 @@ import { MOUSE_DOWN, RESIZE_STOP, RESIZE } from './ngresizable.actions';
     </div>
   `,
   styleUrls: ['ngresizable.component.css'],
-  // tslint:disable-next-line
-  host: {
-    '(document: mouseup)': 'onMouseUp($event)',
-    '(document: touchend)': 'onMouseUp($event)',
-    '(document: mousemove)': 'onMouseMove($event)',
-    '(document: touchmove)': 'onMouseMove($event)'
-  }
 })
 export class NgResizableComponent implements OnInit, OnChanges {
 
@@ -53,13 +48,13 @@ export class NgResizableComponent implements OnInit, OnChanges {
   @Output() resizeEnd = new EventEmitter<IResizeEvent>();
 
   // Width of the element.
-  @Input() width: number;
+  @Input() width: number|undefined;
   // Height of the element.
-  @Input() height: number;
+  @Input() height: number|undefined;
   // x coordinate of the element.
-  @Input() x: number;
+  @Input() x: number|undefined;
   // y coordinate of the element.
-  @Input() y: number;
+  @Input() y: number|undefined;
   // Maximum width.
   @Input() maxWidth = Infinity;
   // Minimum width.
@@ -69,24 +64,28 @@ export class NgResizableComponent implements OnInit, OnChanges {
   // Minimum height.
   @Input() minHeight = 0;
   // Disable the resize.
-  @Input() disableResize: boolean = false;
+  @Input() disableResize: boolean = false; // eslint-disable-line @typescript-eslint/no-inferrable-types
   // An array which contains the resize directions.
   @Input() directions: string[] = ['bottom', 'right'];
   // Resize in a grid.
   @Input() grid: ISize = { width: 1, height: 1 };
   // Bound the resize.
-  @Input() bound: IRectangle = null;
+  @Input() bound: IRectangle = defaultBound;
   // Resize ratio.
-  @Input() ratio: number = null;
+  @Input() ratio: number = 0; // eslint-disable-line @typescript-eslint/no-inferrable-types
 
-  constructor(private _el: ElementRef, private _store: Store, private _renderer: Renderer2) {}
+  private removeMouseMoveListener:() => void = () => {}; /* eslint-disable-line @typescript-eslint/no-empty-function */
+  private removeTouchMoveListener:() => void = () => {}; /* eslint-disable-line @typescript-eslint/no-empty-function */
+
+  constructor(private _el: ElementRef, private _store: Store, private _renderer: Renderer2) {
+  }
 
   ngOnInit() {
     this._renderer.addClass(this._el.nativeElement, 'ngresizable');
     this._store.addReducer(resizeReducer);
     this.setSize(
-      { width: this.width, height: this.height },
-      { x: this.x, y: this.y }
+        { width: this.width, height: this.height },
+        { x: this.x, y: this.y }
     );
   }
 
@@ -117,6 +116,9 @@ export class NgResizableComponent implements OnInit, OnChanges {
     if (e.touches) {
       e = e.touches[0];
     }
+    this.removeMouseMoveListener = this._renderer.listen('document', 'mousemove', (mouseEvent) => this.onMouseMove(mouseEvent));
+    this.removeTouchMoveListener = this._renderer.listen('document', 'touchmove', (mouseEvent) => this.onMouseMove(mouseEvent));
+
     this.emitAction(MOUSE_DOWN, {
       x: e.clientX,
       y: e.clientY
@@ -130,12 +132,16 @@ export class NgResizableComponent implements OnInit, OnChanges {
     this.emitEvent(this.resizeStart);
   }
 
+  @HostListener('document: mouseup')
+  @HostListener('document: touchend')
   onMouseUp(e: any) {
+    this.removeMouseMoveListener();
+    this.removeTouchMoveListener();
     this.emitAction(RESIZE_STOP, { x: 0, y: 0 }, { x: 0, y: 0 });
     this.emitEvent(this.resizeEnd);
   }
 
-  private emitAction(action: String, mousePosition: IPoint, startPosition?: IPoint, startSize?: ISize, startDirection?: string) {
+  private emitAction(action: string, mousePosition: IPoint, startPosition?: IPoint, startSize?: ISize, startDirection?: string) {
     const options: IOptions = {
       minSize: { width: this.minWidth, height: this.minHeight },
       maxSize: { width: this.maxWidth, height: this.maxHeight },
@@ -160,14 +166,23 @@ export class NgResizableComponent implements OnInit, OnChanges {
     return this._store.state;
   }
 
-  private setSize(size: ISize, pos: IPoint) {
-    this.width = size.width;
-    this.height = size.height;
-    this.x = pos.x;
-    this.y = pos.y;
-    this._renderer.setStyle(this._el.nativeElement, 'width', this.width + 'px');
-    this._renderer.setStyle(this._el.nativeElement, 'height', this.height + 'px');
-    this._renderer.setStyle(this._el.nativeElement, 'left', this.x + 'px');
-    this._renderer.setStyle(this._el.nativeElement, 'top', this.y + 'px');
+  private setSize(size: ISize | IUndefinedSize, pos: IPoint|IUndefinedPoint) {
+    if (size.width) {
+      this.width = size.width;
+      this._renderer.setStyle(this._el.nativeElement, 'width', this.width.toString() + 'px');
+    }
+    if (size.height) {
+      this.height = size.height;
+      this._renderer.setStyle(this._el.nativeElement, 'height', this.height.toString() + 'px');
+    }
+    if (pos.x) {
+      this.x = pos.x;
+      this._renderer.setStyle(this._el.nativeElement, 'left', this.x.toString() + 'px');
+    }
+    if (pos.x) {
+      this.y = pos.y;
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+      this._renderer.setStyle(this._el.nativeElement, 'top', this.y + 'px');
+    }
   }
 }

@@ -1,10 +1,9 @@
-import { expect } from 'chai';
-
 import { resizeReducer } from '../lib/ngresizable.reducer';
 import { defaultGrid, defaultBound, Store, IResizeState, IOptions } from '../lib/ngresizable.store';
 import * as actions from '../lib/ngresizable.actions';
 
-describe('ngresizable', () => {
+describe('resizeReducer', () => {
+
 
   let defaultState: IResizeState;
   let defaultOptions: IOptions;
@@ -18,28 +17,29 @@ describe('ngresizable', () => {
       directions: ['right', 'bottom', 'top', 'left', 'bottom-left', 'top-left', 'bottom-right', 'top-right'],
       disabled: false,
       bound: defaultBound,
-      ratio: null
+      ratio: 0
     };
   });
+
 
   describe('mousedown event handling', () => {
 
     it('should throw when no direction is provided', () => {
       expect(() => {
-        resizeReducer(defaultState, actions.MOUSE_DOWN, { x: 1, y: 1 }, { x: 1, y: 1 }, defaultOptions, { width: 0, height: 0 }, null);
-      }).to.throw();
+        resizeReducer(defaultState, actions.MOUSE_DOWN, { x: 1, y: 1 }, { x: 1, y: 1 }, defaultOptions, { width: 0, height: 0 }, undefined);
+      }).toThrow();
     });
 
     it('should initialize state on mousedown', () => {
       resizeReducer(defaultState, actions.MOUSE_DOWN, { x: 1, y: 1 }, { x: 2, y: 2 }, defaultOptions, { width: 0, height: 0 }, 'left');
-      expect(defaultState.direction).to.eq('left');
-      expect(defaultState.isResizing).to.eq(true);
-      expect(defaultState.startSize.width).to.eq(0);
-      expect(defaultState.startSize.height).to.eq(0);
-      expect(defaultState.startPosition.x).to.eq(1);
-      expect(defaultState.startPosition.y).to.eq(1);
-      expect(defaultState.currentPosition.x).to.eq(2);
-      expect(defaultState.currentPosition.y).to.eq(2);
+      expect(defaultState.direction).toEqual('left');
+      expect(defaultState.isResizing).toEqual(true);
+      expect(defaultState.startSize.width).toEqual(0);
+      expect(defaultState.startSize.height).toEqual(0);
+      expect(defaultState.startPosition.x).toEqual(1);
+      expect(defaultState.startPosition.y).toEqual(1);
+      expect(defaultState.currentPosition.x).toEqual(2);
+      expect(defaultState.currentPosition.y).toEqual(2);
     });
 
   });
@@ -56,7 +56,7 @@ describe('ngresizable', () => {
         { width: 0, height: 0 },
         'left'
       );
-      expect(result).to.eq(defaultState);
+      expect(result).toEqual(defaultState);
     });
 
     describe('actual resizing', () => {
@@ -71,7 +71,7 @@ describe('ngresizable', () => {
           { width: 0, height: 0 },
           'bottom-right'
         );
-        expect(state.currentSize.width).to.eq(1);
+        expect(state.currentSize.width).toEqual(1);
 
         resizeReducer(defaultState, actions.MOUSE_DOWN, { x: 1, y: 1 }, { x: 1, y: 1 }, defaultOptions, { width: 0, height: 0 }, 'right');
         state = resizeReducer(defaultState,
@@ -82,7 +82,7 @@ describe('ngresizable', () => {
           { width: 0, height: 0 },
           'right'
         );
-        expect(state.currentSize.width).to.eq(1);
+        expect(state.currentSize.width).toEqual(1);
       });
 
       it('should resize in left', () => {
@@ -95,7 +95,7 @@ describe('ngresizable', () => {
           { width: 0, height: 0 },
           'bottom-left'
         );
-        expect(state.currentSize.width).to.eq(1);
+        expect(state.currentSize.width).toEqual(1);
 
         resizeReducer(defaultState, actions.MOUSE_DOWN, { x: 1, y: 1 }, { x: 1, y: 1 }, defaultOptions, { width: 2, height: 2 }, 'right');
         state = resizeReducer(defaultState,
@@ -106,7 +106,7 @@ describe('ngresizable', () => {
           { width: 0, height: 0 },
           'left'
         );
-        expect(state.currentSize.width).to.eq(1);
+        expect(state.currentSize.width).toEqual(1);
       });
 
       it('should resize in top', () => {
@@ -117,8 +117,8 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
-        expect(state.currentPosition.y).to.eq(0);
+        expect(state.currentSize.height).toEqual(1);
+        expect(state.currentPosition.y).toEqual(0);
 
         resizeReducer(
           defaultState,
@@ -135,8 +135,8 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
-        expect(state.currentPosition.y).to.eq(0);
+        expect(state.currentSize.height).toEqual(1);
+        expect(state.currentPosition.y).toEqual(0);
       });
 
       it('should resize in bottom', () => {
@@ -147,8 +147,8 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
-        expect(state.currentPosition.y).to.eq(1);
+        expect(state.currentSize.height).toEqual(1);
+        expect(state.currentPosition.y).toEqual(1);
 
         resizeReducer(
           defaultState,
@@ -165,7 +165,7 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
+        expect(state.currentSize.height).toEqual(1);
       });
 
       it('should resize in top-left', () => {
@@ -184,10 +184,10 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
-        expect(state.currentSize.width).to.eq(1);
-        expect(state.currentPosition.y).to.eq(0);
-        expect(state.currentPosition.x).to.eq(0);
+        expect(state.currentSize.height).toEqual(1);
+        expect(state.currentSize.width).toEqual(1);
+        expect(state.currentPosition.y).toEqual(0);
+        expect(state.currentPosition.x).toEqual(0);
       });
 
       it('should resize in top-right', () => {
@@ -206,10 +206,10 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
-        expect(state.currentSize.width).to.eq(1);
-        expect(state.currentPosition.y).to.eq(0);
-        expect(state.currentPosition.x).to.eq(1);
+        expect(state.currentSize.height).toEqual(1);
+        expect(state.currentSize.width).toEqual(1);
+        expect(state.currentPosition.y).toEqual(0);
+        expect(state.currentPosition.x).toEqual(1);
       });
 
       it('should resize in bottom-right', () => {
@@ -228,10 +228,10 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
-        expect(state.currentSize.width).to.eq(1);
-        expect(state.currentPosition.x).to.eq(1);
-        expect(state.currentPosition.y).to.eq(1);
+        expect(state.currentSize.height).toEqual(1);
+        expect(state.currentSize.width).toEqual(1);
+        expect(state.currentPosition.x).toEqual(1);
+        expect(state.currentPosition.y).toEqual(1);
       });
 
       it('should resize in bottom-left', () => {
@@ -250,10 +250,10 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(1);
-        expect(state.currentSize.width).to.eq(1);
-        expect(state.currentPosition.x).to.eq(0);
-        expect(state.currentPosition.y).to.eq(1);
+        expect(state.currentSize.height).toEqual(1);
+        expect(state.currentSize.width).toEqual(1);
+        expect(state.currentPosition.x).toEqual(0);
+        expect(state.currentPosition.y).toEqual(1);
       });
 
     });
@@ -279,7 +279,7 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(5);
+        expect(state.currentSize.height).toEqual(5);
 
         state = resizeReducer(defaultState,
           actions.RESIZE,
@@ -287,7 +287,7 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(0);
+        expect(state.currentSize.height).toEqual(0);
 
         state = resizeReducer(defaultState,
           actions.RESIZE,
@@ -295,7 +295,7 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(10);
+        expect(state.currentSize.height).toEqual(10);
       });
 
       it('should use grid width setting', () => {
@@ -315,7 +315,7 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.width).to.eq(5);
+        expect(state.currentSize.width).toEqual(5);
 
         state = resizeReducer(defaultState,
           actions.RESIZE,
@@ -323,7 +323,7 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.width).to.eq(0);
+        expect(state.currentSize.width).toEqual(0);
 
         state = resizeReducer(defaultState,
           actions.RESIZE,
@@ -331,7 +331,7 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.width).to.eq(10);
+        expect(state.currentSize.width).toEqual(10);
       });
 
   });
@@ -357,14 +357,14 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.width).to.eq(50);
+        expect(state.currentSize.width).toEqual(50);
         state = resizeReducer(defaultState,
           actions.RESIZE,
           { x: 1, y: 1 },
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.width).to.eq(0);
+        expect(state.currentSize.width).toEqual(0);
       });
 
       it('should respect maxHeight', () => {
@@ -384,14 +384,14 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(50);
+        expect(state.currentSize.height).toEqual(50);
         state = resizeReducer(defaultState,
           actions.RESIZE,
           { x: 1, y: 1 },
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(0);
+        expect(state.currentSize.height).toEqual(0);
       });
 
       it('should respect both maxWidth & maxHeight', () => {
@@ -411,16 +411,16 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(50);
-        expect(state.currentSize.width).to.eq(30);
+        expect(state.currentSize.height).toEqual(50);
+        expect(state.currentSize.width).toEqual(30);
         state = resizeReducer(defaultState,
           actions.RESIZE,
           { x: 1, y: 1 },
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(0);
-        expect(state.currentSize.width).to.eq(0);
+        expect(state.currentSize.height).toEqual(0);
+        expect(state.currentSize.width).toEqual(0);
       });
     });
 
@@ -443,14 +443,14 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.width).to.eq(50);
+        expect(state.currentSize.width).toEqual(50);
         state = resizeReducer(defaultState,
           actions.RESIZE,
           { x: 1, y: 1 },
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.width).to.eq(50);
+        expect(state.currentSize.width).toEqual(50);
       });
 
       it('should respect minHeight', () => {
@@ -470,14 +470,14 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(60);
+        expect(state.currentSize.height).toEqual(60);
         state = resizeReducer(defaultState,
           actions.RESIZE,
           { x: 1, y: 1 },
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(50);
+        expect(state.currentSize.height).toEqual(50);
       });
 
       it('should respect both minWidth & minHeight', () => {
@@ -497,16 +497,16 @@ describe('ngresizable', () => {
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(60);
-        expect(state.currentSize.width).to.eq(80);
+        expect(state.currentSize.height).toEqual(60);
+        expect(state.currentSize.width).toEqual(80);
         state = resizeReducer(defaultState,
           actions.RESIZE,
           { x: 1, y: 1 },
           { x: 1, y: 1 },
           defaultOptions
         );
-        expect(state.currentSize.height).to.eq(50);
-        expect(state.currentSize.width).to.eq(30);
+        expect(state.currentSize.height).toEqual(50);
+        expect(state.currentSize.width).toEqual(30);
       });
     });
   });
@@ -529,8 +529,8 @@ describe('ngresizable', () => {
         { x: 1, y: 1 },
         defaultOptions
       );
-      expect(state.currentSize.height).to.eq(60);
-      expect(state.currentSize.width).to.eq(60);
+      expect(state.currentSize.height).toEqual(60);
+      expect(state.currentSize.width).toEqual(60);
     });
   });
 
@@ -558,8 +558,8 @@ describe('ngresizable', () => {
         { x: 1, y: 1 },
         defaultOptions
       );
-      expect(state.currentSize.height).to.eq(15);
-      expect(state.currentSize.width).to.eq(10);
+      expect(state.currentSize.height).toEqual(15);
+      expect(state.currentSize.width).toEqual(10);
 
       state = resizeReducer(defaultState,
         actions.RESIZE,
@@ -567,8 +567,8 @@ describe('ngresizable', () => {
         { x: 1, y: 1 },
         defaultOptions
       );
-      expect(state.currentSize.height).to.eq(5);
-      expect(state.currentSize.width).to.eq(4);
+      expect(state.currentSize.height).toEqual(5);
+      expect(state.currentSize.width).toEqual(4);
     });
 
   });
